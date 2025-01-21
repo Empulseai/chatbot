@@ -1,6 +1,6 @@
 streamlit
 pandas
-spacy
+spacy==3.8.3
 pyodbc
 SpeechRecognition
 gtts
