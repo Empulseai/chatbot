@@ -16,8 +16,13 @@ def load_spacy_model():
     try:
         return spacy.load("en_core_web_sm")
     except OSError as e:
-        st.error("SpaCy model 'en_core_web_sm' not found. Please install the model using 'python -m spacy download en_core_web_sm'.")
-        raise e
+        st.warning("SpaCy model 'en_core_web_sm' not found. Attempting to download...")
+        try:
+            spacy.cli.download("en_core_web_sm")
+            return spacy.load("en_core_web_sm")
+        except Exception as download_error:
+            st.error("Failed to download the SpaCy model 'en_core_web_sm'. Please install it manually using 'python -m spacy download en_core_web_sm'.")
+            raise download_error
 
 # # Retrieve database configuration from secrets
 # database_server = st.secrets["general"]["database_server"]
